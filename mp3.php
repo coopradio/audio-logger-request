@@ -13,15 +13,17 @@ $archive = opendir($archive_dir);
 // create human readable variable names
 $start_hour = substr($start, 6, 2);
 $start_min = substr($start, 9, 2);
+$start_sec = substr($start, 12, 2);
 $end_hour = substr($end, 6, 2);
 $end_min = substr($end, 9, 2);
+$end_sec = substr($end, 12, 2);
 $month = substr(date("F", mktime(0,0,0,substr($start,0,2), 10)), 0, 3);
 $day = substr($start, 3, 2);
 $year = substr($_REQUEST["date"], 0, 4);
 $day_name = substr(date("D", mktime(1,0,0,date('m',strtotime($month)),$day,$year)), 0, 3);
 
 $folder_name = "requested";
-$file_name = $year . "_" . $month . $day ."_" . $day_name . "-" . $start_hour . ":" . $start_min . "-" . $end_hour . ":" . $end_min . ".mp3";
+$file_name = $year . "_" . $month . $day ."_" . $day_name . "-" . $start_hour . ":" . $start_min . ":" . $start_sec .  "-" . $end_hour . ":" . $end_min . ":" . $end_sec . ".mp3";
 // loop variable definitions
 $start_file = '';
 $end_file = '';
@@ -50,7 +52,7 @@ $l_hour = substr($end, 6, 2) - substr($start, 6, 2);
 $l_min = substr($end, 9, 2) - substr($start, 9, 2);
 $l_sec = substr($end, 12, 2) - substr($start, 12, 2);
 
-$offset_sec = substr($start, 9, 2) * 60;
+$offset_sec = (substr($start, 9, 2) * 60) + $start_sec;
 $length = ((($l_hour * 60) + $l_min) * 60) + $l_sec;
 $end_point = $offset_sec + $length;
 
